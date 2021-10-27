@@ -1156,7 +1156,7 @@ void KConfigTest::testSubGroup()
     QCOMPARE(srcg.readEntry("parentgrpstring", ""), QStringLiteral("somevalue"));
 
     QStringList groupList = cg.groupList();
-    groupList.sort(); // comes from QSet, so order is undefined
+    groupList.sort();
     QCOMPARE(groupList, (QStringList{QStringLiteral("SubGroup/3"), QStringLiteral("SubGroup1"), QStringLiteral("SubGroup2")}));
 
     const QStringList expectedSubgroup3Keys{QStringLiteral("sub3string")};

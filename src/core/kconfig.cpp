@@ -276,7 +276,7 @@ KConfig::~KConfig()
 QStringList KConfig::groupList() const
 {
     Q_D(const KConfig);
-    QSet<QString> groups;
+    QStringList groups;
 
     for (auto entryMapIt = d->entryMap.cbegin(); entryMapIt != d->entryMap.cend(); ++entryMapIt) {
         const KEntryKey &key = entryMapIt.key();
@@ -287,13 +287,14 @@ QStringList KConfig::groupList() const
         }
     }
 
-    return groups.values();
+    groups.removeDuplicates();
+    return groups;
 }
 
 QStringList KConfigPrivate::groupList(const QByteArray &group) const
 {
-    QByteArray theGroup = group + '\x1d';
-    QSet<QString> groups;
+    const QByteArray theGroup = group + '\x1d';
+    QStringList groups;
 
     for (auto entryMapIt = entryMap.cbegin(); entryMapIt != entryMap.cend(); ++entryMapIt) {
         const KEntryKey &key = entryMapIt.key();
@@ -303,7 +304,8 @@ QStringList KConfigPrivate::groupList(const QByteArray &group) const
         }
     }
 
-    return groups.values();
+    groups.removeDuplicates();
+    return groups;
 }
 
 static bool isGroupOrSubGroupMatch(const QByteArray &potentialGroup, const QByteArray &group)
